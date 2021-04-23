@@ -27,4 +27,12 @@ export class HomePage {
       );
     }
 
+
+    public displayTime(timeInSeconds) {
+      let minutes = Math.floor (timeInSeconds / 60);
+      let seconds = timeInSeconds % 60; 
+
+      return minutes + ' : ' + seconds;
+    }
+
 }
