@@ -8,10 +8,16 @@ import { Component } from '@angular/core';
 export class HomePage {
 
   public timeLeftInSeconds = 0;                     //Time Left
-  private durationInSeconds = 4 * 60;               //Duration of cooking
+  private durationInSeconds = 0;               //Duration of cooking
 
   public timer;                             // This is the timer (chronometre)
 
+  public cookingTimes = [
+    {label: 'Soft Boiled Egg', time: 4},
+    {label: 'Hard Boiled Egg', time: 10}
+  ];
+
+  public chosenTime = null;                       //cooking item selectioner
 
   constructor() {}
 
@@ -42,11 +48,26 @@ export class HomePage {
       clearInterval(this.timer);
       this.timeLeftInSeconds = 0;
       this.timer=null;
+      this.chosenTime = null;
     }
 
     public pauseTimer(){
       clearInterval(this.timer);
       this.timer=null;
+    }
+
+    public chooseTime(chosenTime){
+      this.durationInSeconds = chosenTime.time * 60;        //Define Duration
+      this.timeLeftInSeconds = this.durationInSeconds;        //Define Time Left
+      this.chosenTime = chosenTime;                           //Save cooking method selected
+      
+      clearInterval(this.timer);                              //Stop Timer if another cooking method selected
+      this.timer = null;
+    }
+
+    public isTimerPaused(){
+      return this.timeLeftInSeconds > 0
+              && this.timeLeftInSeconds < this.durationInSeconds
     }
 
 }

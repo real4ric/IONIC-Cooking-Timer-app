@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="head">
   <ion-toolbar>
     <ion-title>
       Egg Cooking Timer
@@ -7,21 +7,31 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <h2 class="h"> {{ chosenTime?.label}}</h2>
   <div class="time-left">{{ displayTime(timeLeftInSeconds) }}</div>
 
-  
-  
   <ion-grid>
     <ion-row>
-      <ion-col size="12" *ngIf="!timer">
-        <ion-button expand="block" (click)="startTimer()">{{ timeLeftInSeconds == 0 ? 'START' : 'RESTART'}}</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand='block' *ngIf="timer" (click) = "pauseTimer()">PAUSE</ion-button>        
-      </ion-col>
-      <ion-col>
-        <ion-button expand='block' *ngIf="timer" (click) = "stopTimer()">STOP</ion-button>        
+      <ion-col size="6" *ngFor="let time of cookingTimes">
+        <p>{{ time.label }}</p>
+        <ion-button expand="block" (click)="chooseTime(time)" color="success">
+          Select
+        </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid> 
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" *ngIf="!timer && chosenTime">
+        <ion-button expand="block" (click)="startTimer()">{{ isTimerPaused() ? 'RESTART' : 'START'}}</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand='block' *ngIf="timer" (click)="pauseTimer()" color="warning">PAUSE</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand='block' *ngIf="timer" (click)="stopTimer()" color="danger">STOP</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
