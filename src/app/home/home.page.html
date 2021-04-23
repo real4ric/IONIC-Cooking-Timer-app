@@ -1,0 +1,14 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Egg Cooking Timer
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div>{{ timeLeftInSeconds }}</div>
+
+  <ion-button expand="block" (click)="startTimer()">Start</ion-button>
+
+</ion-content>
