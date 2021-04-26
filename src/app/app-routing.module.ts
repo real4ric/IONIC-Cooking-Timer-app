@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'cooking-time-form',
+    loadChildren: () => import('./cooking-time-form/cooking-time-form.module').then( m => m.CookingTimeFormPageModule)
+  },
 ];
 
 @NgModule({
