@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="head">
   <ion-toolbar>
     <ion-title>
-      Egg Cooking Timer
+      Cooking Timer
     </ion-title>
     <ion-buttons slot="end">
       <ion-button routerLink="/cooking-time-form">
@@ -12,6 +12,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  {{ cookingTimeService.getName() }}
   <h2 class="h"> {{ chosenTime?.label}}</h2>
   <div class="time-left">{{ displayTime(timeLeftInSeconds) }}</div>
 

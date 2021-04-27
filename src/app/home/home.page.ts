@@ -1,25 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CookingTimeService } from '../services/cooking-time.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+
+//implement oninit veut dire que la classe promet qu'elle aura une methode ngOnInit
+export class HomePage implements OnInit {
 
   public timeLeftInSeconds = 0;                     //Time Left
   private durationInSeconds = 0;               //Duration of cooking
 
   public timer;                             // This is the timer (chronometre)
 
-  public cookingTimes = [
-    {label: 'Soft Boiled Egg', time: 4},
-    {label: 'Hard Boiled Egg', time: 10}
-  ];
+  public cookingTimes = [];
 
   public chosenTime = null;                       //cooking item selectioner
 
-  constructor() {}
+  constructor(public cookingTimeService: CookingTimeService ) {}      //## Import service
+
+
+  //Juste apres l'execution du constructeur, ngOnInit est execute, cette fonction peut etre asynchrone contrairement au constructeur
+  public async ngOnInit(){
+    this.cookingTimes = await this.cookingTimeService.getCookingTime();
+  }
 
     public startTimer () {
       if(this.timeLeftInSeconds == 0) {
@@ -69,5 +75,7 @@ export class HomePage {
       return this.timeLeftInSeconds > 0
               && this.timeLeftInSeconds < this.durationInSeconds
     }
+
+    
 
 }

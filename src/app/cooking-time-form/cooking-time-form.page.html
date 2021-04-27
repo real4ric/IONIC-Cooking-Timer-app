@@ -15,18 +15,24 @@
   <ion-list>
     
     <ion-item>
-      <ion-label>Name</ion-label>
-      <ion-input></ion-input>
+      <ion-label>Name: </ion-label>
+      <ion-input [(ngModel)]= "cookingTimeService.input.label" ></ion-input>
     </ion-item>
     
     <ion-item>
-      <ion-label>Time</ion-label>
-      <ion-input type="number" min="1" max="30"></ion-input>
+      <ion-label>Time: </ion-label>
+      <ion-input type="number" min="1" max="30" [(ngModel)]="cookingTimeService.input.time"></ion-input>
     </ion-item>
 
   
   </ion-list>
 
-  <ion-button expand="block">Enter</ion-button>
+  <ion-img *ngIf="image" src="data:image/{{ image.format }};base64, {{ image.base64String }}"></ion-img>
+
+  <ion-button (click)="takePicture()" expand="block" color = "warning">
+    Take Photo <ion-icon name="camera"></ion-icon>
+  </ion-button>
+
+  <ion-button expand="block" (click) = "validateForm()">Enter</ion-button>
 
 </ion-content>
