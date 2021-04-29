@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CookingTimeService } from '../services/cooking-time.service';
 
 import { Plugins, CameraResultType, CameraSource, CameraOptions } from '@capacitor/core';
+import { ToastController } from '@ionic/angular';
 
 const { Camera } = Plugins;
 
@@ -15,22 +16,37 @@ export class CookingTimeFormPage implements OnInit {
 
   public image;
 
-  constructor(public cookingTimeService: CookingTimeService,
-      private router: Router
+  constructor(
+      public cookingTimeService: CookingTimeService,
+      private router: Router,
+      private toastCtrl: ToastController
     ) {
     this.cookingTimeService.setName('Another Name');
-    
   
    }
 
   ngOnInit() {
   }
 
-  public validateForm() {
-    //tot valider la saisie
+  public async validateForm() {
+    //todo valider la saisie
+    if (!this.cookingTimeService.validateInput()){
 
+      //afficher l'erreur dans un toast
+      const toast = await this.toastCtrl.create({
+        message: 'You Have to Enter Name and Time',
+        color: 'danger',
+        position: 'top',
+        duration: 1000
+      });
+      toast.present();
+      return;
+    }
+
+    //Save image in input
+    this.cookingTimeService.input.image = this.image;
+    
     //Enregistrement du noveau temps
-
     //en pasant par le service
     this.cookingTimeService.addTime(this.cookingTimeService.getTimeData());
 

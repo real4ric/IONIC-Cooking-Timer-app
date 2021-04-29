@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { CookingTimeService } from '../services/cooking-time.service';
 
 @Component({
@@ -19,7 +20,10 @@ export class HomePage implements OnInit {
 
   public chosenTime = null;                       //cooking item selectioner
 
-  constructor(public cookingTimeService: CookingTimeService ) {}      //## Import service
+  constructor(
+    public cookingTimeService: CookingTimeService,
+    private alertCTRL: AlertController
+    ) {}      //## Import service
 
 
   //Juste apres l'execution du constructeur, ngOnInit est execute, cette fonction peut etre asynchrone contrairement au constructeur
@@ -74,6 +78,18 @@ export class HomePage implements OnInit {
     public isTimerPaused(){
       return this.timeLeftInSeconds > 0
               && this.timeLeftInSeconds < this.durationInSeconds
+    }
+
+    public async deleteOneTimer(pos) {
+      const alert = await this.alertCTRL.create({
+        header: "Do you really want to delete? ",
+        message: "This will permanently delete your item",
+        buttons: [
+         { text: 'NO' },
+         { text: 'YES', handler: ()=>{this.cookingTimeService.deleteTime(pos)} }
+        ]
+      });
+      alert.present();
     }
 
     

@@ -18,11 +18,26 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let time of cookingTimes">
-        <p>{{ time.label }}</p>
-        <ion-button expand="block" (click)="chooseTime(time)" color="success">
-          Select
-        </ion-button>
+      <ion-col size="6" *ngFor="let time of cookingTimes; let position=index">
+        <p>{{ position }} {{ time.label }}</p>
+        
+        <ion-img src= "data:image/{{ time.image.format }};base64, {{time.image.base64String}}" *ngIf="time.image"></ion-img>
+        
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-button (click)="chooseTime(time)" size="small">
+                <ion-icon name="caret-up"></ion-icon>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button color="danger" size="small" (click)="deleteOneTimer(position)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -41,3 +56,7 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+
+
+

@@ -22,7 +22,8 @@ export class CookingTimeService {
   //Enter a new time
   public input ={
     label: null,
-    time: null
+    time: null,
+    image: null
   };
 
   constructor() { }
@@ -45,7 +46,8 @@ export class CookingTimeService {
   public getTimeData() {
     return {
       label : this.input.label,
-      time : this.input.time
+      time : this.input.time,
+      image: this.input.image
     }
   }
 
@@ -56,12 +58,25 @@ export class CookingTimeService {
     this.input.label = null;
     this.input.time = null;
 
-    //Enregistrement de la liste des temps, dans l'espace de persistance gerer par storage
-    
-    await Storage.set({
+      //Appel de la fonction on cree 
+    this.persist();
+  }
+
+  private async persist(){
+  //Enregistrement de la liste des temps, dans l'espace de persistance gerer par storage 
+  await Storage.set({
       key: STORAGE_KEY,
       value: JSON.stringify(this.cookingTimes)
     });
+  }
+
+  public validateInput() {
+    return this.input.label && this.input.time;
+  }
+
+  public deleteTime(pos) {
+    this.cookingTimes.splice(pos, 1);
+    this.persist();
   }
 
   
